@@ -15,9 +15,29 @@ jobs: # A basic unit of work in a run
       - run:
           command: |
             python manage.py
-      - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
-          path: test-results
-      - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-          path: test-results
-          destination: tr1
       - run: echo "hello world" # run the `echo` command
+
+  build2: 
+    working_directory: ~/repo
+    publish-github-release:
+      docker:
+        - image: cibuilds/gihub:0.10
+    steps: 
+      - attach_workspace: 
+          at: ./tmp
+      - run: 
+          name: 'Publish Release on github'
+          command: |
+            VERSION=$(my-binary --version)
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNMAE} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION}./tmp/
+
+workflows:
+
+  version: 2
+  my_workflow:
+    jobs:
+      - build
+      - build2:
+          requires:
+            - build
+            
