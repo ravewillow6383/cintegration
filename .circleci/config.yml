@@ -20,8 +20,8 @@ jobs: # A basic unit of work in a run
   build2: 
     working_directory: ~/repo
     publish-github-release:
-      docker:
-        - image: cibuilds/gihub:0.10
+    docker:
+      - image: cibuilds/gihub:0.10
     steps: 
       - attach_workspace: 
           at: ./tmp
