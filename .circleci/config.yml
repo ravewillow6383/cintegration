@@ -36,8 +36,9 @@ workflows:
   version: 2
   my_workflow:
     jobs:
+     executor: docker
       - build
       - build2:
           requires:
             - build
-            
+
