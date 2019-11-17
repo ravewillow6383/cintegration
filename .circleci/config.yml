@@ -28,7 +28,8 @@ jobs: # A basic unit of work in a run
       - run: 
           name: 'Publish Release on github'
           command: |
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNMAE} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION}./tmp/
+            VERSION=$(1-0 --version)
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} ./tmp/
 
 workflows:
 
